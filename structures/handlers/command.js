@@ -6,9 +6,9 @@ const PG = promisify(glob);
 const ascii = require("ascii-table");
 
 /**
- *  @param {Client} kirai
+ *  @param {Client} client
  */
-module.exports = async (kirai) => {
+module.exports = async (client) => {
     const table = new ascii("Command Loaded");
     
     commandsArray = [];
@@ -29,7 +29,7 @@ module.exports = async (kirai) => {
             return table.addRow(command.name, "- FAILED", "Permission is");
         }
 
-        kirai.commands.set(command.name, command);
+        client.commands.set(command.name, command);
         commandsArray.push(command);
 
         await table.addRow(command.name, "+ Successful");
@@ -40,8 +40,8 @@ module.exports = async (kirai) => {
 
     // Permissions Check //
 
-    kirai.on("ready", async() => {
-        const mainGuild = await kirai.guilds.cache.get("310304625406246912");
+    client.on("ready", async() => {
+        const mainGuild = await client.guilds.cache.get("310304625406246912");
 
         mainGuild.commands.set(commandsArray).then(async (command) => {
             const Roles = (commandName) => {

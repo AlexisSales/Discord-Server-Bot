@@ -7,10 +7,10 @@ const PG = promisify(glob);
 const ascii = require("ascii-table");
 
 // Constant Global Var Assignments
-const kirai = new Client({intents: 14023});
+const client = new Client({intents: 14023});
 
-kirai.commands = new Collection();
+client.commands = new Collection();
 ["event", "command"].forEach(handler => {
-    require(`./handlers/${handler}`)(kirai, PG, ascii);
+    require(`./handlers/${handler}`)(client, PG, ascii);
 })
-kirai.login(auth.KIRAI_TOKEN);
+client.login(auth.KIRAI_TOKEN);

@@ -4,10 +4,10 @@ module.exports = {
     once: true,
     /**
      * 
-     * @param { Client } kirai 
+     * @param { Client } client 
      */
-    execute(kirai) {
+    execute(client) {
         console.log("The Kirai client is now ready");
-        kirai.user.setActivity("Elysium as Server Bot", {type: "WATCHING"});
+        client.user.setActivity("Elysium as Server Bot", {type: "WATCHING"});
     }
 }

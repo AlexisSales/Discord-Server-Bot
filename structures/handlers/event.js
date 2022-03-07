@@ -4,10 +4,10 @@ const { glob } = require("glob");
 const PG = promisify(glob);
 const ascii = require("ascii-table");
 
-module.exports = async (kirai) => {
+module.exports = async (client) => {
     const table = new ascii("Events Loaded");
 
-    (await PG(`${process.cwd()}/kiraievents/*/*.js`)).map(async (file) => {
+    (await PG(`${process.cwd()}/events/*/*.js`)).map(async (file) => {
         const event = require(file);
 
         if(!Events.includes(event.name) || !event.name) {
@@ -17,14 +17,13 @@ module.exports = async (kirai) => {
         }
 
         if(event.once) {
-            kirai.once(event.name, (...args) => event.execute(...args, kirai));
+            client.once(event.name, (...args) => event.execute(...args, client));
         } else {
-            kirai.on(event.name, (...args) => event.execute(...args, kirai));
+            client.on(event.name, (...args) => event.execute(...args, client));
         }
 
         await table.addRow(event.name, "+ Event Loaded")
             
-    })
-    console.log("Kirai Functionality");
+    });
     console.log(table.toString());
 }
